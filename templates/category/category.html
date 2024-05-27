@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="content-wrapper">
+    {% include 'message.html' %}
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title fs-3 text-center">Add Category</h1>
+                    <form action="{% url 'savecategory' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="{{ form.name.id_for_label }}" class="control-label">{{ form.name.label }}</label>
+                            {{ form.name }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.status.id_for_label }}" class="control-label">{{ form.status.label }}</label>
+                            {{ form.status }}
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Add Category</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}
+
+{% block script %}
+{% endblock script %}

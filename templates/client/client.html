@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="content-wrapper">
+    {% include 'message.html' %}
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title fs-3 text-center">Add Client</h1>
+                    <form action="{% url 'saveclient' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="id_category" class="control-label">Category</label>
+                            {{ form.category }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_first_name" class="control-label">First Name</label>
+                            {{ form.first_name }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_middle_name" class="control-label">Middle Name</label>
+                            {{ form.middle_name }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_last_name" class="control-label">Last Name</label>
+                            {{ form.last_name }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_contact" class="control-label">Contact</label>
+                            {{ form.contact }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_address" class="control-label">Address</label>
+                            {{ form.address }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_meter_code" class="control-label">Meter Code</label>
+                            {{ form.meter_code }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_first_reading" class="control-label">First Reading</label>
+                            {{ form.first_reading }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_status" class="control-label">Status</label>
+                            {{ form.status }}
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Add Client</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

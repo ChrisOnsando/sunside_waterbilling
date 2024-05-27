@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block body %}
+<style>
+  .material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 20;
+  }
+</style>
+
+<div class="content-wrapper">
+    {% include 'message.html' %}
+    <div class="row">
+        <div class="col-md-5 grid-margin">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title text-center">Welcome To SunSide Water Billing System</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
+
+{% block script %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock script %}

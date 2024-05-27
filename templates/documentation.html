@@ -1,0 +1,176 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>SunSide Water Billing System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'vendors/feather/feather.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/mdi/css/materialdesignicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/ti-icons/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/typicons/typicons.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/simple-line-icons/css/simple-line-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/css/vendor.bundle.base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vertical-layout-light/style.css' %}">
+    <style>
+        @media screen and (max-width: 991px){
+          .sidebar-offcanvas.active {
+              left: 0;
+          }
+        }
+
+        /* Apply the Open Sans font to the body */
+        body {
+          font-family: 'Open Sans', sans-serif;
+        }
+    </style>
+  </head>
+<body class="sidebar-dark sidebar-icon-only">
+
+<!-- partial:partials/_navbar.html -->
+<nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-lg-row">
+    <div class="text-center navbar-brand-wrapper d-inline-flex align-items-center justify-content-start bg-dark ">
+        <div class="d-flex m-auto">
+        <button class="navbar-toggler navbar-toggler align-self-center me-2" type="button" data-bs-toggle="minimize">
+            <span class="icon-menu text-white"></span>
+        </button>
+          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-bs-toggle="offcanvas" style="padding-left:0;">
+          <span class="mdi mdi-menu"></span>
+          </button>
+        </div>
+    </div>
+  <div class="navbar-menu-wrapper d-flex align-items-top bg-dark">
+      <ul class="navbar-nav">
+      <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
+          <h1 class="welcome-text text-white font-weight-bold">Welcome To SunSide Water Billing System</h1>
+      </li>
+      </ul>
+      <ul class="navbar-nav ms-auto">
+      <li class="nav-item dropdown d-sm-block">
+          <a class="btn btn-sm btn-primary text-white" href="{% url 'login_user' %}"><i class="dropdown-item-icon mdi mdi-power text-white me-2"></i>Login</a>
+          </div>
+      </li>
+      </ul>
+  </div>
+</nav>
+
+<!-- partial -->
+<div class="container-fluid page-body-wrapper">
+    <nav class="sidebar sidebar-offcanvas bg-dark" id="sidebar" style="position:fixed;">
+        <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="mdi mdi-grid-large menu-icon"></i>
+                <span class="menu-title">Dashboard</span>
+              </a>
+            </li>
+        </ul>
+    </nav>
+    <div class="main-panel" style="margin-left:auto;">
+      <div class="content-wrapper">
+        <div class="row">
+          <div class="col-md-6 grid-margin">
+          <div class="card">
+              <div class="card-body">
+              <h3 style="font-weight:bold;" class="pb-2">SunSide Water Billing System</h3>
+              <p style="font-size:medium; line-height:1.5;">Welcome to the SunSide Water Billing System, an innovative solution designed to transform the way you manage water billing and usage tracking. Our comprehensive software is crafted to cater to the diverse needs of the water utility industry, offering an all-in-one platform for efficient bill generation, seamless customer communication, and real-time water usage monitoring.</p>
+              <br>
+              <h3 style="font-weight:bold;" class="pb-2">About SunSide WaterBilling System</h3>
+              <p style="font-size:medium; line-height:1.5;">In the rapidly evolving water utility sector, staying ahead requires a robust system that understands and adapts to the unique challenges you face. SunSide WaterBilling System is your digital ally, providing a suite of features designed to optimize operations, reduce manual workloads, and elevate your service delivery to new heights of efficiency and accuracy.</p>
+              <br>
+              <h3 style="font-weight:bold;" class="pb-3">Key Features</h3>
+                  <h4 style="font-weight:bold;">1. Real-Time Water Usage Monitoring</h4>
+                    <ul class="mx-3" style="font-size:small; line-height:1.5;">
+                      <li style="font-size:medium; line-height:1.5;">Track water usage in real-time to ensure accurate billing and efficient resource management.</li>
+                      <li style="font-size:medium; line-height:1.5;">Categorize and analyze water consumption data for better insights and decision-making.</li>
+                      <li style="font-size:medium; line-height:1.5;">Streamline the process of updating and managing water usage records with a user-friendly interface.</li>
+                    </ul>
+                  <h4 style="font-weight:bold;">2. Effortless Bill Generation</h4>
+                    <ul class="mx-3" style="font-size:small; line-height:1.5;">
+                      <li style="font-size:medium; line-height:1.5;">Generate professional, detailed bills effortlessly with just a few clicks.</li>
+                      <li style="font-size:medium; line-height:1.5;">Access a comprehensive billing history for quick reference and seamless auditing.</li>
+                      <li style="font-size:medium; line-height:1.5;">The system automatically calculates totals, taxes, and discounts, ensuring accuracy in every transaction.</li>
+                    </ul>
+                  <h4 style="font-weight:bold;">3. User-Centric Interface</h4>
+                    <ul class="mx-3" style="font-size:small; line-height:1.5;">
+                      <li style="font-size:medium; line-height:1.5;">Navigate the system with ease through an intuitive and user-friendly design.</li>
+                      <li style="font-size:medium; line-height:1.5;">Designed to be accessible to users of all technical backgrounds, promoting widespread usability.</li>
+                      <li style="font-size:medium; line-height:1.5;">Responsive layout ensures a seamless experience across various devices, empowering you to manage your services on the go.</li>
+                    </ul>
+                  <h4 style="font-weight:bold;">4. Integrated Email Functionality</h4>
+                    <ul class="mx-3" style="font-size:small; line-height:1.5;">
+                      <li style="font-size:medium; line-height:1.5;">Communicate effectively with customers by sending bills directly via email.</li>
+                      <li style="font-size:medium; line-height:1.5;">Customize email templates to maintain a professional and branded appearance in all interactions.</li>
+                      <li style="font-size:medium; line-height:1.5;">Enhance customer engagement with automated email notifications for updates, promotions, and more.</li>
+                    </ul>
+              <br>
+              <h3 style="font-weight:bold;" class="pb-2">First-Time User Experience</h3>
+              <p style="font-size:medium; line-height:1.5;">Embarking on your journey with the SunSide Water Billing System is a breeze, thanks to our thoughtfully designed onboarding experience.</p>
+              <br>
+              <h3 style="font-weight:bold;" class="pb-2">Get Ready to Transform Your Service</h3>
+              <p style="font-size:medium; line-height:1.5;">Whether you are a burgeoning small utility provider or an established enterprise, the SunSide Water Billing System is engineered to simplify your operations. Embrace the power of efficient water usage tracking, streamlined billing processes, and enhanced customer communication all in one integrated platform.</p>
+              <br>
+              <h4 style="font-weight:bold; line-height:1.5;" class="pb-2">Sign up today and embark on a journey of efficiency, growth, and success with the SunSide Water Billing System!</h4>
+              </div>
+          </div>
+          </div>
+
+          <div class="col-md-6 grid-margin">
+            <div class="card">
+                <div class="card-body">
+                  <p class="card-title">View Our Equipzen Software</p>
+                  <h3 style="font-weight:bold;" class="pb-2">Home Screen</h3>
+                  <p style="font-size:medium; line-height:1.5;">Our home page offers you a seamless experience, empowering you to generate bills effortlessly and manage or view current customer billing details with unparalleled ease.</p>
+                  <a href="{% static 'images/homepage.png' %}" target="_blank">
+                    <img class="card-img" src="{% static 'images/homepage.png' %}" alt="Home Page" >
+                  </a>
+                  <br>
+                  <br>
+                  <h3 style="font-weight:bold;" class="pb-2">Add Customer</h3>
+                  <p style="font-size:medium; line-height:1.5;">Introducing our Customer Management Page – your gateway to managing customer information efficiently. Explore our user-friendly interface to add new customers or update existing records effortlessly, ensuring accurate and up-to-date information at all times.</p>
+                  <a href="{% static 'images/addcustomer.png' %}" target="_blank">
+                    <img class="card-img" src="{% static 'images/addcustomer.png' %}" alt="Add Customer Page" >
+                  </a>
+                  <br>
+                  <br>
+                  <h3 style="font-weight:bold;" class="pb-2">View Customer History</h3>
+                  <p style="font-size:medium; line-height:1.5;">Unveiling our comprehensive Customer History Page, where every detail of customer transactions is meticulously laid out for your convenience. Dive into a wealth of information including billing history, usage patterns, and more. Effortlessly navigate through customer records and make informed decisions, ensuring a seamless service experience.</p>
+                  <a href="{% static 'system_image/customerhistory.png' %}" target="_blank">
+                    <img class="card-img" src="{% static 'images/customer.png' %}" alt="Customer History Page" >
+                  </a>
+                  <br>
+                  <br>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+  <!-- plugins: js -->
+  <script src="{% static 'vendors/js/vendor.bundle.base.js' %}"></script>
+  <!-- endinject -->
+  <!-- Plugin {% static 'js for this page -->
+  <script src="{% static 'vendors/chart.js/Chart.min.js' %}"></script>
+  <script src="{% static 'vendors/bootstrap-datepicker/bootstrap-datepicker.min.js' %}"></script>
+  <script src="{% static 'vendors/progressbar.js/progressbar.min.js' %}"></script>
+
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="{% static 'js/off-canvas.js' %}"></script>
+  <script src="{% static 'js/hoverable-collapse.js' %}"></script>
+  <script src="{% static 'js/template.js' %}"></script>
+  <script src="{% static 'js/settings.js' %}"></script>
+  <script src="{% static 'js/todolist.js' %}"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  {% comment %} <script src="{% static 'js/jquery.cookie.js' %}" type="text/javascript"></script>
+  <script src="{% static 'js/dashboard.js' %}"></script>
+  <script src="{% static 'js/Chart.roundedBarCharts.js' %}"></script> {% endcomment %}
+  <!-- End custom js for this page-->
+  {% block script %}{% endblock script %}
+</body>
+
+</html>

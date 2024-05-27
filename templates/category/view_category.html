@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block body %}
+<div class="content-wrapper">
+    {% include 'message.html' %}
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-0">List All Categories</h4>
+                <form method="get" class="mb-3">
+                    <div class="form-row">
+                        <div class="col-sm-3 mb-2">
+                            <label for="search_name">Search by Name:</label>
+                            <input type="text" id="search_name" name="name" class="form-control" value="{{ request.GET.name }}" placeholder="Enter category name">
+                        </div>
+                        <div class="col-sm-3 mb-2">
+                            <label for="search_status">Search by Status:</label>
+                            <select id="search_status" name="status" class="form-control">
+                                <option value="">All</option>
+                                <option value="1" {% if request.GET.status == '1' %} selected {% endif %}>Active</option>
+                                <option value="2" {% if request.GET.status == '2' %} selected {% endif %}>Inactive</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>&nbsp;</label>
+                            <button type="submit" class="btn btn-primary btn-block">Search</button>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>&nbsp;</label>
+                            <a href="{% url 'viewcategory' %}" class="btn btn-secondary btn-block">Clear Filters</a>
+                        </div>
+                    </div>
+                </form>
+                <div class="table-responsive">
+                    <table class="table table-hover text-center" id="category-tbl" name="category">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Category Name</th>
+                                <th>Status</th>
+                                <th>Date Created</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if categories %}
+                                {% for category in categories %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ category.name }}</td>
+                                        <td>
+                                            {% if category.status == "1" %}
+                                                <span class="badge badge-success">Active</span>
+                                            {% else %}
+                                                <span class="badge badge-warning">Inactive</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ category.date_created|date:"d-m-Y h:i A" }}</td>
+                                        <td>
+                                            <a class="btn btn-outline-dark me-1 btn-sm" href="{% url 'editcategory' category.id %}"><span class="mdi mdi-pencil"></span>Edit</a>
+                                            <a class="btn btn-outline-primary me-1 btn-sm" href="{% url 'view_category_detail' category.id %}"><span class="mdi mdi-eye"></span>View</a>
+                                            <form action="{% url 'deletecategory' category.id %}?next={% url 'viewcategory' %}" method="post" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this category?')">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-outline-danger me-1 btn-sm">
+                                                    <span class="mdi mdi-delete"></span>Delete
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="5">No categories found.</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Pagination code -->
+                <div class="pagination mt-2">
+                    {% if categories.has_previous %}
+                        <a href="?page=1{% if request.GET.name %}&name={{ request.GET.name }}{% endif %}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}" class="btn btn-sm btn-primary">&laquo; First</a>
+                        <a href="?page={{ categories.previous_page_number }}{% if request.GET.name %}&name={{ request.GET.name }}{% endif %}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}" class="btn btn-sm btn-primary">&lsaquo; Previous</a>
+                    {% endif %}
+                    <span class="current-page">Page {{ categories.number }} of {{ categories.paginator.num_pages }}</span>
+                    {% if categories.has_next %}
+                        <a href="?page={{ categories.next_page_number }}{% if request.GET.name %}&name={{ request.GET.name }}{% endif %}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}" class="btn btn-sm btn-primary">Next &rsaquo;</a>
+                        <a href="?page={{ categories.paginator.num_pages }}{% if request.GET.name %}&name={{ request.GET.name }}{% endif %}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}" class="btn btn-sm btn-primary">Last &raquo;</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

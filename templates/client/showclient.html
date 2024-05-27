@@ -1,0 +1,57 @@
+
+
+{% extends 'base.html' %}
+
+{% block body %}
+
+<div class="container pt-3">
+    {% include 'message.html' %}
+
+    <div class="card-body">
+        <div class="container-fluid">
+            <fieldset class="border-bottom">
+                <legend>Client Details</legend>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th class="text-secondary">Code</th>
+                                <td class="fw-bold">{{ client.id }}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-secondary">First Name</th>
+                                <td class="fw-bold">{{ client.first_name }}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-secondary">Last Name</th>
+                                <td class="fw-bold">{{ client.last_name }}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-secondary">Contact</th>
+                                <td class="fw-bold">{{ client.contact }}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-secondary">Address</th>
+                                <td class="fw-bold">{{ client.address }}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-secondary">Meter Code</th>
+                                <td class="fw-bold">{{ client.meter_code }}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-secondary">First Reading</th>
+                                <td class="fw-bold">{{ client.first_reading }}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-secondary">Status</th>
+                                <td class="fw-bold">{% if client.status == "1" %} Active {% else %} Inactive {% endif %}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

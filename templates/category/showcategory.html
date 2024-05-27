@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<div class="container pt-3">
+    {% include 'message.html' %}
+
+    <div class="card-body">
+        <div class="container-fluid">
+            <fieldset class="border-bottom">
+                <legend>Category Details</legend>
+                <dl>
+                    <div class="row">
+                        <div class="col-md">
+                            <dt class="text-secondary h6">Name</dt>
+                            <dd class="fw-bold mt-1 h6">{{ category.name }}</dd>
+                        </div>
+                    </div> 
+                    <div class="row">
+                        <div class="col-md mt-1">
+                            <dt class="text-secondary h6">Status</dt>
+                            <dd class="fw-bold mt-1 h6">{% if category.status == "1" %} Active {% else %} Inactive {% endif %}</dd>
+                        </div>
+                    </div>
+                </dl>
+            </fieldset>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

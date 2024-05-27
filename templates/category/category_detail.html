@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block body %}
+<div class="content-wrapper">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-0">Category Details</h4>
+                <div class="table-responsive">
+                    <table class="table table-hover text-center">
+                        <tbody>
+                            <tr>
+                                <th>Category Name</th>
+                                <td>{{ category.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Status</th>
+                                <td>
+                                    {% if category.status == "1" %}
+                                        <span class="badge badge-success">Active</span>
+                                    {% else %}
+                                        <span class="badge badge-warning">Inactive</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Date Created</th>
+                                <td>{{ category.date_created|date:"d-m-Y h:i A" }}</td>
+                            </tr>
+                            <!-- Add more details if needed -->
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Back button to return to the list of categories -->
+                <a href="{% url 'viewcategory' %}" class="btn btn-primary">Back to Category List</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

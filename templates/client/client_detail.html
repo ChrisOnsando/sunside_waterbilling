@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block body %}
+<div class="content-wrapper">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-0">Client Details</h4>
+                <div class="table-responsive">
+                    <table class="table table-hover text-center">
+                        <tbody>
+                            <tr>
+                                <th>Code</th>
+                                <td>{{ client.id }}</td>
+                            </tr>
+                            <tr>
+                                <th>First Name</th>
+                                <td>{{ client.first_name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Middle Name</th>
+                                <td>{{ client.middle_name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Last Name</th>
+                                <td>{{ client.last_name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Contact</th>
+                                <td>{{ client.contact }}</td>
+                            </tr>
+                            <tr>
+                                <th>Address</th>
+                                <td>{{ client.address }}</td>
+                            </tr>
+                            <tr>
+                                <th>Meter Code</th>
+                                <td>{{ client.meter_code }}</td>
+                            </tr>
+                            <tr>
+                                <th>First Reading</th>
+                                <td>{{ client.first_reading }}</td>
+                            </tr>
+                            <tr>
+                                <th>Status</th>
+                                <td>
+                                    {% if client.status == "1" %}
+                                        <span class="badge badge-success">Active</span>
+                                    {% else %}
+                                        <span class="badge badge-warning">Inactive</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Date Created</th>
+                                <td>{{ client.date_created|date:"d-m-Y h:i A" }}</td>
+                            </tr>
+                            <!-- Add more details if needed -->
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Back button to return to the list of clients -->
+                <a href="{% url 'viewclient' %}" class="btn btn-primary">Back to Client List</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}
