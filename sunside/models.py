@@ -26,3 +26,19 @@ class Client(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+class Bill(models.Model):
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    reading_date = models.DateField()
+    previous_reading = models.DecimalField(max_digits=10, decimal_places=2)
+    current_reading = models.DecimalField(max_digits=10, decimal_places=2)
+    rate_per_cubic_meter = models.DecimalField(max_digits=5, decimal_places=2, default=30.00)
+    total_bill = models.DecimalField(max_digits=10, decimal_places=2)
+    due_date = models.DateField()
+    status = models.CharField(max_length=7, choices=(('Pending', 'Pending'), ('Paid', 'Paid')), default='Pending')
+    date_created = models.DateTimeField(default=timezone.now)
+    date_updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Bill for {self.client} on {self.reading_date}"
+    

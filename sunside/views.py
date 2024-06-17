@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-
+from django.http import JsonResponse
 
 def login_user(request):
     logout(request)
@@ -184,3 +184,56 @@ def delete_client(request, client_id):
         client.delete()
         messages.success(request, 'Client deleted successfully.')
     return redirect('/viewclient/')
+
+@login_required
+def get_previous_reading(request, client_id):
+    try:
+        client = Client.objects.get(id=client_id)
+        last_bill = Bill.objects.filter(client=client).order_by('-reading_date').first()
+        previous_reading = last_bill.current_reading if last_bill else client.first_reading
+        return JsonResponse({'previous_reading': previous_reading})
+    except Client.DoesNotExist:
+        return JsonResponse({'error': 'Client not found'}, status=404)
+    
+@login_required
+def create_bill(request):
+    if request.method == 'POST':
+        form = BillForm(request.POST)
+        if form.is_valid():
+            bill = form.save(commit=False)
+            bill.previous_reading = form.cleaned_data['previous_reading']
+            bill.total_bill = form.cleaned_data['total_bill']
+            bill.save()
+            messages.success(request, 'Bill created successfully!')
+            return redirect('createbill')  
+    else:
+        form = BillForm()
+        
+    return render(request, 'billing/create_bill.html', {'form': form})
+
+@login_required
+def list_bills(request):
+    bills = Bill.objects.all().select_related('client', 'client__category').order_by('-reading_date')
+    return render(request, 'billing/list_bills.html', {'bills': bills})
+
+@login_required
+def edit_bill(request, bill_id):
+    bill = get_object_or_404(Bill, id=bill_id)
+    
+    if request.method == 'POST':
+        form = BillForm(request.POST, instance=bill)
+        if form.is_valid():
+            form.save()
+            return redirect('list_bills') 
+    else:
+        form = BillForm(instance=bill)
+    
+    return render(request, 'billing/edit_bill.html', {'form': form, 'bill': bill})
+
+@login_required
+def delete_bill(request, bill_id):
+    bill = get_object_or_404(Bill, id=bill_id)
+    if request.method == 'POST':
+        bill.delete()
+        return redirect('list_bills')
+    return render(request, 'billing/delete_bill.html', {'bill': bill})

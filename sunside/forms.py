@@ -119,4 +119,95 @@ class EditClient(forms.ModelForm):
             'first_reading': forms.NumberInput(attrs={'class': 'form-control'}),
             'status': forms.Select(attrs={'class': 'form-control'}),
         }
+
+class BillForm(forms.ModelForm):
+    previous_reading = forms.DecimalField(disabled=True, label='Previous Reading', widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    total_bill = forms.DecimalField(disabled=True, label='Total Bill', widget=forms.NumberInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = Bill
+        fields = ['client', 'reading_date', 'current_reading', 'due_date', 'status']
+        labels = {
+            'client': 'Client',
+            'reading_date': 'Reading Date',
+            'current_reading': 'Current Reading',
+            'due_date': 'Due Date',
+            'status': 'Status',
+        }
+        widgets = {
+            'client': forms.Select(attrs={'class': 'form-control'}),
+            'reading_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'current_reading': forms.NumberInput(attrs={'class': 'form-control'}),
+            'due_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(BillForm, self).__init__(*args, **kwargs)
+        if 'client' in self.data:
+            try:
+                client_id = int(self.data.get('client'))
+                client = Client.objects.get(id=client_id)
+                last_bill = Bill.objects.filter(client=client).order_by('-reading_date').first()
+                previous_reading = last_bill.current_reading if last_bill else client.first_reading
+                self.fields['previous_reading'].initial = previous_reading
+            except (ValueError, TypeError, Client.DoesNotExist):
+                self.fields['previous_reading'].initial = 0.00
+        else:
+            self.fields['previous_reading'].initial = 0.00
+
+        self.fields['total_bill'].initial = 0.00  # Initialize total_bill to 0.00
+
+    def clean(self):
+        cleaned_data = super().clean()
+        client = cleaned_data.get('client')
+        current_reading = cleaned_data.get('current_reading')
         
+        if client and current_reading is not None:
+            last_bill = Bill.objects.filter(client=client).order_by('-reading_date').first()
+            previous_reading = last_bill.current_reading if last_bill else client.first_reading
+            cleaned_data['previous_reading'] = previous_reading
+            cleaned_data['total_bill'] = (current_reading - previous_reading) * 30
+        return cleaned_data
+
+class BillEditForm(forms.ModelForm):
+    previous_reading = forms.DecimalField(disabled=True, label='Previous Reading', widget=forms.NumberInput(attrs={'class': 'form-control', 'readonly': 'readonly'}))
+    total_bill = forms.DecimalField(disabled=True, label='Total Bill', widget=forms.NumberInput(attrs={'class': 'form-control', 'readonly': 'readonly'}))
+
+    class Meta:
+        model = Bill
+        fields = ['client', 'reading_date', 'current_reading', 'due_date', 'status']
+        labels = {
+            'client': 'Client',
+            'reading_date': 'Reading Date',
+            'current_reading': 'Current Reading',
+            'due_date': 'Due Date',
+            'status': 'Status',
+        }
+        widgets = {
+            'client': forms.Select(attrs={'class': 'form-control', 'readonly': 'readonly'}),
+            'reading_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date', 'readonly': 'readonly'}),
+            'current_reading': forms.NumberInput(attrs={'class': 'form-control', 'readonly': 'readonly'}),
+            'due_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date', 'readonly': 'readonly'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(BillEditForm, self).__init__(*args, **kwargs)
+        instance = kwargs.get('instance')
+        if instance:
+            self.fields['previous_reading'].initial = instance.previous_reading
+            self.fields['total_bill'].initial = instance.total_bill
+
+    def clean(self):
+        cleaned_data = super().clean()
+        client = cleaned_data.get('client')
+        current_reading = cleaned_data.get('current_reading')
+        
+        if client and current_reading is not None:
+            last_bill = Bill.objects.filter(client=client).order_by('-reading_date').exclude(pk=self.instance.pk).first()
+            previous_reading = last_bill.current_reading if last_bill else client.first_reading
+            cleaned_data['previous_reading'] = previous_reading
+            cleaned_data['total_bill'] = (current_reading - previous_reading) * 30
+        return cleaned_data
+

@@ -18,4 +18,9 @@ urlpatterns = [
     path('editclient/<str:client_id>/', edit_client, name="editclient"),
     path('deleteclient/<int:client_id>/', delete_client, name="deleteclient"),
     path('saveclient', save_client, name="saveclient"),
+    path('createbill/', create_bill, name='createbill'),
+    path('get-previous-reading/<int:client_id>/', get_previous_reading, name='get_previous_reading'),
+    path('edit-bill/<int:bill_id>/', edit_bill, name='edit_bill'),
+    path('list-bills/', list_bills, name='list_bills'),
+    path('delete-bill/<int:bill_id>/', delete_bill, name='delete_bill'),
 ]

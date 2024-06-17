@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="content-wrapper">
+    {% include 'message.html' %}
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title fs-3 text-center">Edit Bill</h1>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="id_client" class="control-label">{{ form.client.label_tag }}</label>
+                            {{ form.client }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_reading_date" class="control-label">{{ form.reading_date.label_tag }}</label>
+                            {{ form.reading_date }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_previous_reading" class="control-label">{{ form.previous_reading.label_tag }}</label>
+                            {{ form.previous_reading }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_current_reading" class="control-label">{{ form.current_reading.label_tag }}</label>
+                            {{ form.current_reading }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_total_bill" class="control-label">{{ form.total_bill.label_tag }}</label>
+                            {{ form.total_bill }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_due_date" class="control-label">{{ form.due_date.label_tag }}</label>
+                            {{ form.due_date }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_status" class="control-label">{{ form.status.label_tag }}</label>
+                            {{ form.status }}
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Edit Bill</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const previousReadingField = document.getElementById('id_previous_reading');
+        const totalBillField = document.getElementById('id_total_bill');
+        const currentReadingField = document.getElementById('id_current_reading');
+
+        currentReadingField.addEventListener('input', updateTotalBill);
+
+        function updateTotalBill() {
+            const previousReading = parseFloat(previousReadingField.value) || 0;
+            const currentReading = parseFloat(currentReadingField.value) || 0;
+            const totalBill = (currentReading - previousReading) * 30;
+            totalBillField.value = totalBill.toFixed(2);
+        }
+    });
+</script>
+{% endblock body %}
