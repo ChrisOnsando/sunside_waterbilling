@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bill for {{ bill.client.first_name }} {{ bill.client.last_name }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            width: 100%;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .content {
+            margin-bottom: 20px;
+        }
+        .content p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Bill for {{ bill.client.first_name }} {{ bill.client.last_name }}</h1>
+        </div>
+        <div class="content">
+            <p><strong>Reading Date:</strong> {{ bill.reading_date }}</p>
+            <p><strong>Previous Reading:</strong> {{ bill.previous_reading }}</p>
+            <p><strong>Current Reading:</strong> {{ bill.current_reading }}</p>
+            <p><strong>Total Bill:</strong> {{ bill.total_bill }}</p>
+            <p><strong>Due Date:</strong> {{ bill.due_date }}</p>
+            <p><strong>Status:</strong> {{ bill.get_status_display }}</p>
+        </div>
+    </div>
+</body>
+</html>

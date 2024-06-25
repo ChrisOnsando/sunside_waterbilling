@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils import timezone
 
-# Create your models here.
 class Category(models.Model):
     id = models.AutoField(primary_key=True, serialize=False, auto_created=True)
     name=models.CharField(max_length=350)

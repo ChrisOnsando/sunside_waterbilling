@@ -7,10 +7,29 @@
     <div class="col-md-12 grid-margin">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title mb-0">List All Clients</h4>
+                <h1 class="card-title mb-0">List All Clients</h1>
                 <form method="get" class="mb-3">
                     <div class="form-row">
-                        <!-- Add search and filter options if needed -->
+                        <div class="col-sm-3 mb-2">
+                            <label for="search_first_name">Search by First Name:</label>
+                            <input type="text" id="search_first_name" name="first_name" class="form-control" value="{{ request.GET.first_name }}" placeholder="Enter first name">
+                        </div>
+                        <div class="col-sm-3 mb-2">
+                            <label for="search_last_name">Search by Last Name:</label>
+                            <input type="text" id="search_last_name" name="last_name" class="form-control" value="{{ request.GET.last_name }}" placeholder="Enter last name">
+                        </div>
+                        <div class="col-sm-3 mb-2">
+                            <label for="search_meter_code">Search by Meter Code:</label>
+                            <input type="text" id="search_meter_code" name="meter_code" class="form-control" value="{{ request.GET.meter_code }}" placeholder="Enter meter code">
+                        </div>
+                        <div class="col-sm-2">
+                            <label>&nbsp;</label>
+                            <button type="submit" class="btn btn-primary btn-block">Search</button>
+                        </div>
+                        <div class="col-sm-1">
+                            <label>&nbsp;</label>
+                            <a href="{% url 'viewclient' %}" class="btn btn-secondary btn-block">Clear</a>
+                        </div>
                     </div>
                 </form>
                 <div class="table-responsive">
@@ -71,13 +90,13 @@
                 <!-- Pagination code -->
                 <div class="pagination mt-2">
                     {% if clients.has_previous %}
-                        <a href="?page=1" class="btn btn-sm btn-primary">&laquo; First</a>
-                        <a href="?page={{ clients.previous_page_number }}" class="btn btn-sm btn-primary">&lsaquo; Previous</a>
+                        <a href="?page=1{% if request.GET.first_name %}&first_name={{ request.GET.first_name }}{% endif %}{% if request.GET.last_name %}&last_name={{ request.GET.last_name }}{% endif %}{% if request.GET.meter_code %}&meter_code={{ request.GET.meter_code }}{% endif %}" class="btn btn-sm btn-primary">&laquo; First</a>
+                        <a href="?page={{ clients.previous_page_number }}{% if request.GET.first_name %}&first_name={{ request.GET.first_name }}{% endif %}{% if request.GET.last_name %}&last_name={{ request.GET.last_name }}{% endif %}{% if request.GET.meter_code %}&meter_code={{ request.GET.meter_code }}{% endif %}" class="btn btn-sm btn-primary">&lsaquo; Previous</a>
                     {% endif %}
                     <span class="current-page">Page {{ clients.number }} of {{ clients.paginator.num_pages }}</span>
                     {% if clients.has_next %}
-                        <a href="?page={{ clients.next_page_number }}" class="btn btn-sm btn-primary">Next &rsaquo;</a>
-                        <a href="?page={{ clients.paginator.num_pages }}" class="btn btn-sm btn-primary">Last &raquo;</a>
+                        <a href="?page={{ clients.next_page_number }}{% if request.GET.first_name %}&first_name={{ request.GET.first_name }}{% endif %}{% if request.GET.last_name %}&last_name={{ request.GET.last_name }}{% endif %}{% if request.GET.meter_code %}&meter_code={{ request.GET.meter_code }}{% endif %}" class="btn btn-sm btn-primary">Next &rsaquo;</a>
+                        <a href="?page={{ clients.paginator.num_pages }}{% if request.GET.first_name %}&first_name={{ request.GET.first_name }}{% endif %}{% if request.GET.last_name %}&last_name={{ request.GET.last_name }}{% endif %}{% if request.GET.meter_code %}&meter_code={{ request.GET.meter_code }}{% endif %}" class="btn btn-sm btn-primary">Last &raquo;</a>
                     {% endif %}
                 </div>
             </div>

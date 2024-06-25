@@ -9,6 +9,9 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.http import JsonResponse
+from django.template.loader import render_to_string
+from weasyprint import HTML
+from django.http import HttpResponse
 
 def login_user(request):
     logout(request)
@@ -151,12 +154,24 @@ def save_client(request):
 
 @login_required
 def view_client(request):
+    search_first_name = request.GET.get('first_name', '')
+    search_last_name = request.GET.get('last_name', '')
+    search_meter_code = request.GET.get('meter_code', '')
+
     clients = Client.objects.all()
-    paginator = Paginator(clients, 10)
-    page = request.GET.get('page')
-    clients = paginator.get_page(page)
-    context = {'clients': clients}
-    return render(request, 'client/view_client.html', context)
+    
+    if search_first_name:
+        clients = clients.filter(first_name__icontains=search_first_name)
+    if search_last_name:
+        clients = clients.filter(last_name__icontains=search_last_name)
+    if search_meter_code:
+        clients = clients.filter(meter_code__icontains=search_meter_code)
+    
+    paginator = Paginator(clients, 10)  # Show 10 clients per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    return render(request, 'client/view_client.html', {'clients': page_obj})
 
 @login_required
 def view_client_detail(request, client_id):
@@ -214,6 +229,11 @@ def create_bill(request):
 @login_required
 def list_bills(request):
     bills = Bill.objects.all().select_related('client', 'client__category').order_by('-reading_date')
+
+    client_name = request.GET.get('client_name')
+    if client_name:
+        bills = bills.filter(client__first_name__icontains=client_name) | bills.filter(client__last_name__icontains=client_name)
+
     return render(request, 'billing/list_bills.html', {'bills': bills})
 
 @login_required
@@ -237,3 +257,17 @@ def delete_bill(request, bill_id):
         bill.delete()
         return redirect('list_bills')
     return render(request, 'billing/delete_bill.html', {'bill': bill})
+
+def print_bill_pdf(request, bill_id):
+    bill = get_object_or_404(Bill, id=bill_id)
+    html_string = render_to_string('print_bill_pdf.html', {'bill': bill})
+    
+    html = HTML(string=html_string)
+    result = html.write_pdf()
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'inline; filename=bill_{}.pdf'.format(bill.id)
+    response['Content-Transfer-Encoding'] = 'binary'
+    response.write(result)
+
+    return response

@@ -23,4 +23,5 @@ urlpatterns = [
     path('edit-bill/<int:bill_id>/', edit_bill, name='edit_bill'),
     path('list-bills/', list_bills, name='list_bills'),
     path('delete-bill/<int:bill_id>/', delete_bill, name='delete_bill'),
+    path('bill/print/<int:bill_id>/', print_bill_pdf, name='print_bill'),
 ]
